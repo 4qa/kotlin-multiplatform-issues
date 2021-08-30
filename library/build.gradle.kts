@@ -10,19 +10,22 @@ repositories {
 }
 
 kotlin {
-    jvm()
+    watchos()
+    ios()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-common"))
-            }
+        val commonMain by getting
+        val commonTest by getting
+
+        val consumeDarwinMain by creating{
+            dependsOn(commonMain)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
+        val iosMain by getting{
+            dependsOn(consumeDarwinMain)
+        }
+
+        val watchosMain by getting{
+            dependsOn(consumeDarwinMain)
         }
     }
 }
